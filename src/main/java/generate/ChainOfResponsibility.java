@@ -23,7 +23,7 @@ public class ChainOfResponsibility extends Pattern {
         }
         TypeSpec chainInter = chain.build();
 
-        storeFile(chainInter, pack, path);
+        storeFile(chainInter, name, pack, path);
     }
 
     //  Generates constructor to store the successor

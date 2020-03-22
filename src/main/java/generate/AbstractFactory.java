@@ -26,6 +26,7 @@ public class AbstractFactory extends Pattern {
     //    Generates code by delegating parts of the generation to other functions
     @Override
     public void generateCode(String configPackage, String configPath){
+        String designInter = promptPatternInterface("Abstract Factory");
         String designName = promptPatternName("Abstract Factory");
         String[] interName = promptMultiInterface();
 
@@ -75,8 +76,8 @@ public class AbstractFactory extends Pattern {
         log.info("Generated specified classes");
 
 //        Creates interface of abstract factory
-        genInterface("AbstractFactory", abstractFactMethod, configPackage, configPath);
-        ClassName absFact = ClassName.get(configPackage, "AbstractFactory");
+        genInterface(designInter, abstractFactMethod, configPackage, configPath);
+        ClassName absFact = ClassName.get(configPackage, designInter);
 
 //        Implements the abstract factory
         genClass(designName, concreteMethod, absFact, false, configPackage, configPath);

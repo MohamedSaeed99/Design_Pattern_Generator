@@ -33,7 +33,7 @@ public class Facade extends Pattern {
         TypeSpec facadeClass = generatedClass.build();
 
 //        Stores class in file
-        storeFile(facadeClass, pack, path);
+        storeFile(facadeClass, name, pack, path);
     }
 
     //    Generates the Constructor for the Facade class

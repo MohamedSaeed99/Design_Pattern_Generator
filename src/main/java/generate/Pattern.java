@@ -1,6 +1,11 @@
 package generate;
 
 import CustomInput.*;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
 import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
@@ -11,6 +16,7 @@ import java.util.Arrays;
 import jdk.internal.net.http.common.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import plugin.ClashDetect;
 
 //Uses composite for all the implementation of the design patterns
 public abstract class Pattern {
@@ -21,9 +27,27 @@ public abstract class Pattern {
         public String[] methods = {};
     }
 
+    protected ClashDetect cd = new ClashDetect();
+    protected Logger log = LoggerFactory.getLogger(Pattern.class);
+
     public abstract void generateCode(String configPackage, String configPath);
 
-    protected Logger log = LoggerFactory.getLogger(Pattern.class);
+//    Prompts user to rename class or interface
+    public String promptRename(String str){
+        String rename = "";
+        do {
+            ClashNameInput ci = new ClashNameInput(true, str);
+            if (ci.showAndGet()) {
+                rename = ci.getName();
+            }
+            if (rename.equals("")) {
+                NoInputWarning ni = new NoInputWarning(true);
+                ni.show();
+            }
+        }while(rename.equals(""));
+
+        return rename;
+    }
 
     //    Retrieves list of design pattern methods from popup
     public String[] promptPatternMethods(String str){
@@ -60,6 +84,12 @@ public abstract class Pattern {
             }
         }while(interName.equals(""));
 
+
+//        Repeats the rename prompt until a name that doesnt already exists is inputed
+        while(cd.isFound(interName+".java", cd.path)){
+            interName = promptRename(interName);
+        }
+        cd.addToMap(interName+".java", cd.path);
         log.info("Interface received: {}", interName);
 
         return interName;
@@ -80,6 +110,14 @@ public abstract class Pattern {
             }
         }while(interName.length == 0 || Arrays.asList(interName).contains(""));
 
+        for(int i = 0; i < interName.length; i++){
+//            Repeats the rename prompt until a name that doesnt already exists is inputed
+            while(cd.isFound(interName[i]+".java", cd.path)){
+                interName[i] = promptRename(interName[i]);
+            }
+            cd.addToMap(interName[i]+".java", cd.path);
+        }
+
         log.info("Interfaces received: {}", Arrays.toString(interName));
 
         return interName;
@@ -99,11 +137,41 @@ public abstract class Pattern {
             }
         }while(designName.equals(""));
 
+//        Repeats the rename prompt until a name that doesnt already exists is inputed
+        while(cd.isFound(designName+".java", cd.path)){
+            designName = promptRename(designName);
+        }
+        cd.addToMap(designName+".java", cd.path);
         log.info("Design pattern class name received: {}", designName);
 
         return designName;
     }
 
+//  Retrieves a name for the design pattern class
+    public String promptPatternInterface(String str){
+        String dInter = "";
+        do {
+            DesignInterfaceInput di = new DesignInterfaceInput(true, str);
+            if (di.showAndGet()) {
+                dInter = di.getName();
+            }
+            if (dInter.equals("")) {
+                NoInputWarning ni = new NoInputWarning(true);
+                ni.show();
+            }
+        }while(dInter.equals(""));
+
+//       Repeats the rename prompt until a name that doesnt already exists is inputed
+        while(cd.isFound(dInter+".java", cd.path)){
+            dInter = promptRename(dInter);
+        }
+        cd.addToMap(dInter+".java", cd.path);
+        log.info("Design pattern class name received: {}", dInter);
+
+        return dInter;
+    }
+
+//    gets a list of classes and corresponding methods
     public ClassMethodNames promptClassMethodsName(String inter){
         ClassMethodNames cmn = new ClassMethodNames();
 
@@ -122,6 +190,13 @@ public abstract class Pattern {
         } while(cmn.classes.length == 0 || Arrays.asList(cmn.classes).contains("")
                 || cmn.methods.length == 0 || Arrays.asList(cmn.methods).contains(""));
 
+//        Looks for and fixes name clashes
+        for(int i = 0; i < cmn.classes.length; i++) {
+            while(cd.isFound(cmn.classes[i]+".java", cd.path)){
+                cmn.classes[i] = promptRename(cmn.classes[i]);
+            }
+            cd.addToMap(cmn.classes[i]+".java", cd.path);
+        }
         return cmn;
     }
 
@@ -173,12 +248,13 @@ public abstract class Pattern {
             generatedClass.addSuperinterface(inter);
         }
         TypeSpec genClass = generatedClass.build();
+
 //        Creates a class file in output directory
-        storeFile(genClass, pack, path);
+        storeFile(genClass, name, pack, path);
     }
 
     //    Generates basic and empty client class
-    public void genClient(String pack, String path){
+    public void genClient(String name, String pack, String path){
 //        Creates the "main" method of the class which will be implemented by user
         MethodSpec mainMethod = MethodSpec.methodBuilder("main")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -192,7 +268,17 @@ public abstract class Pattern {
                 .addMethod(mainMethod)
                 .build();
 
-        storeFile(clientClass, pack, path);
+        if(cd.isFound(name+".java", path + "/" + pack)){
+
+            log.info("Class {}.java already exists", name);
+            ClashNameInput cni = new ClashNameInput(true, name);
+            if(cni.showAndGet()){
+                genClient(cni.getName(), pack, path);
+            }
+        }
+        else {
+            storeFile(clientClass, "Client", pack, path);
+        }
     }
 
     //    returns a list of abstract methods
@@ -221,7 +307,8 @@ public abstract class Pattern {
         }
         TypeSpec interfaceGen = inter.build();
 
-        storeFile(interfaceGen, pack, path);
+
+        storeFile(interfaceGen, name, pack, path);
     }
 
     //    Generates the Factory method
@@ -251,7 +338,8 @@ public abstract class Pattern {
     }
 
     //    Stores the class into a file
-    public void storeFile(TypeSpec classBuild, String pack, String path){
+    public void storeFile(TypeSpec classBuild, String name, String pack, String path){
+
         //        Creates a class file in output directory
         JavaFile javaFile = JavaFile.builder(pack, classBuild)
                 .addFileComment("AUTO_GENERATED BY JavaPoet")

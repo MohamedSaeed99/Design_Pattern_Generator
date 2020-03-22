@@ -1,8 +1,10 @@
 package CustomInput;
 
+import com.intellij.openapi.project.Project;
 import generate.Generator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import plugin.ClashDetect;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +16,13 @@ public class MainContent implements ActionListener {
     private JPanel pan = new JPanel(new GridLayout(4, 2));
     private String path;
     private String pack;
+    private Project project;
 
     //    Constructor to set path and package that's passed in
-    public MainContent(String path, String pack){
+    public MainContent(Project project, String path, String pack){
         this.path = path;
         this.pack = pack;
+        this.project = project;
     }
 
     //    creates a panel from the buttons
@@ -64,10 +68,16 @@ public class MainContent implements ActionListener {
 //    Listens for the button presses and executes them
     public void actionPerformed(ActionEvent e) {
         Generator gen = new Generator();
+//        gets the absolute directory where files well be stored
+        String path = this.path + "/" + this.pack;
+
+//        sets up the initial hashmap with the files already there
+        ClashDetect cd = new ClashDetect(path, this.project);
+
         String designPattern = e.getActionCommand();
 
         log.info("Button clicked value: ", designPattern);
 
-        gen.generate(designPattern, pack, path);
+        gen.generate(designPattern, this.pack, this.path);
     }
 }

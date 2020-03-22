@@ -18,7 +18,7 @@ public class Composite extends Pattern {
             designs.generateCode(pack, path);
         }
         if(designPatterns.size() > 0) {
-            genClient(pack, path);
+            genClient("Client", pack, path);
             log.info("Generated Client class");
         }
     }

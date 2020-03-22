@@ -15,12 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClashDetect {
-    static HashMap<PsiFile, String> fileNames = new HashMap<PsiFile, String>();
+    static HashMap<String, String> fileNames;
     final static Logger log = LoggerFactory.getLogger(ClashDetect.class);
-    private String path;
-    private Project project;
+    public static String path;
+    public static Project project;
 
-    ClashDetect(String path, Project project){
+    public ClashDetect(){}
+
+    public ClashDetect(String path, Project project){
+        this.fileNames = new HashMap<String, String>();
         this.path = path;
         this.project = project;
         this.getInitialFiles();
@@ -37,7 +40,7 @@ public class ClashDetect {
             PsiFile[] ps = psiDir.getFiles();
 
             for(PsiFile p : ps){
-                this.addToMap(p, "temp");
+                this.addToMap(p.getName(), this.path);
             }
         }
 //        if package doesnt exist then data structure should be initialized []
@@ -46,14 +49,23 @@ public class ClashDetect {
         }
     }
 
-    public void addToMap(PsiFile ps, String pack){
-        log.debug("Inserting {} into data structure", ps);
-        fileNames.put(ps, pack);
+    public void addToMap(String name, String ps){
+        log.debug("Inserting {} into data structure", name);
+        fileNames.put(name, ps);
     }
 
-    public boolean isFound(PsiFile ps) {
-
-        return fileNames.containsValue(ps);
+    public boolean isFound(String name, String dir) {
+        System.out.println(name);
+        System.out.println(fileNames.containsKey(name));
+        if(fileNames.containsKey(name)){
+            System.out.println("Found Key");
+            System.out.println(fileNames.get(name));
+            System.out.println(dir);
+            if(fileNames.get(name).equals(dir)){
+                System.out.println("All Match");
+                return true;
+            }
+        }
+        return false;
     }
-
 }

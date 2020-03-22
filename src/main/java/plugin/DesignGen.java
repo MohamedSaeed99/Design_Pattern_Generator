@@ -29,7 +29,7 @@ public class DesignGen implements ToolWindowFactory {
         }
 
 //        Creates the contents of the ToolWindow
-        MainContent mc = new MainContent(project.getBasePath()+conf[0], conf[1]);
+        MainContent mc = new MainContent(project, project.getBasePath()+conf[0], conf[1]);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(mc.main(), "Design Patterns", false);
 
@@ -37,13 +37,6 @@ public class DesignGen implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         log.info("Dockable Window Pane is set");
-
-
-//        gets the absolute directory where files well be stored
-        String path = project.getBasePath()+conf[0] + "/"+conf[1];
-
-//        sets up the initial hashmap with the files already there
-        ClashDetect cd = new ClashDetect(path, project);
     }
 
     //    Retrieves path and package from the configuration file

@@ -38,7 +38,7 @@ public class Mediator extends Pattern {
             generatedClass.addMethod(m);
         }
         TypeSpec genClass = generatedClass.build();
-        storeFile(genClass, pack, path);
+        storeFile(genClass, name, pack, path);
     }
 
     //    Generates constructor of classes to store instances of mediator
@@ -67,7 +67,7 @@ public class Mediator extends Pattern {
 
         log.debug("Storing class into file");
 
-        storeFile(classGenerated, pack, path);
+        storeFile(classGenerated, name, pack, path);
     }
 
     @Override

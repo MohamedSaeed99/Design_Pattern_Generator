@@ -43,7 +43,7 @@ public class Builder extends Pattern {
             complexClass.addMethod(m);
         }
         TypeSpec comClass = complexClass.build();
-        storeFile(comClass, pack, path);
+        storeFile(comClass, "ComplexObjects", pack, path);
     }
 
     //    Creates methods that would add objects into ComplexObject list
@@ -88,7 +88,7 @@ public class Builder extends Pattern {
         }
         TypeSpec builder = buildClass.build();
 
-        storeFile(builder, pack, path);
+        storeFile(builder, name, pack, path);
     }
 
     @Override
@@ -101,21 +101,6 @@ public class Builder extends Pattern {
 
         String[] classNames= cmn.classes;
         String[] methodNames = cmn.methods;
-
-//        ensures that the inputs are not empty
-//        do{
-//            ClassMethodInput cm = new ClassMethodInput(true, interName);
-//            if (cm.showAndGet()) {
-//                classNames = cm.getClasses().split(" ");
-//                methodNames = cm.getMethods().split(" ");
-//            }
-//            if(classNames.length == 0 || Arrays.asList(classNames).contains("")
-//                    || methodNames.length == 0 || Arrays.asList(methodNames).contains("")){
-//                NoInputWarning ni = new NoInputWarning(true);
-//                ni.show();
-//            }
-//        } while(classNames.length == 0 || Arrays.asList(classNames).contains("")
-//                || methodNames.length == 0 || Arrays.asList(methodNames).contains(""));
 
         log.info("Received additional information for Builder");
 
