@@ -35,15 +35,15 @@ public class Builder extends Pattern {
     }
 
     //    Creates ComplexObjects class that would have add method to add passed in objects
-    public void genComplexClass(TypeName type, ArrayList<MethodSpec> methods, String pack, String path){
-        TypeSpec.Builder complexClass = TypeSpec.classBuilder("ComplexObjects")
+    public void genComplexClass(String name, TypeName type, ArrayList<MethodSpec> methods, String pack, String path){
+        TypeSpec.Builder complexClass = TypeSpec.classBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
                 .addField(type, "list", Modifier.PRIVATE);
         for(MethodSpec m : methods){
             complexClass.addMethod(m);
         }
         TypeSpec comClass = complexClass.build();
-        storeFile(comClass, "ComplexObjects", pack, path);
+        storeFile(comClass, pack, path);
     }
 
     //    Creates methods that would add objects into ComplexObject list
@@ -88,13 +88,14 @@ public class Builder extends Pattern {
         }
         TypeSpec builder = buildClass.build();
 
-        storeFile(builder, name, pack, path);
+        storeFile(builder, pack, path);
     }
 
     @Override
     public void generateCode(String configPackage, String configPath){
 //        Asks user for additional information about Builder design pattern
-        String designName = promptPatternName("Builder");;
+        String[] designInter = promptPatternInterface("Builder", true);
+        String designName = promptPatternName(designInter[0]);;
         String interName = promptInterface();
 
         ClassMethodNames cmn = promptClassMethodsName(interName);
@@ -120,7 +121,7 @@ public class Builder extends Pattern {
         log.debug("Constructed ComplexObjects methods");
 
 //        Generates the ComplexObjects class
-        genComplexClass(listInter, complexMethods, configPackage, configPath);
+        genComplexClass(designInter[1], listInter, complexMethods, configPackage, configPath);
 
         log.info("Generated ComplexObjects class");
 
@@ -148,16 +149,16 @@ public class Builder extends Pattern {
         log.info("Generated specified classes");
 
 //        Adds constructor and result functions for Builder and generates builder interface and concrete class
-        ClassName complexType = ClassName.get(configPackage, "ComplexObjects");
+        ClassName complexType = ClassName.get(configPackage, designInter[1]);
         builderAbsMethods.add(absGenMethod("result", complexType, null, null));
         builderMethods.add(genConcreteCompMethod("result", complexType));
         builderMethods.add(genBuilderConstructor(complexType));
 
         log.debug("Generated Builder methods");
 
-        genInterface("Builder", builderAbsMethods, configPackage, configPath);
+        genInterface(designInter[0], builderAbsMethods, configPackage, configPath);
 
-        genBuilderClass(designName, builderMethods, complexType, ClassName.get(configPackage, "Builder"),
+        genBuilderClass(designName, builderMethods, complexType, ClassName.get(configPackage, designInter[0]),
                 configPackage, configPath);
 
         log.info("Generated Builder interface and class");

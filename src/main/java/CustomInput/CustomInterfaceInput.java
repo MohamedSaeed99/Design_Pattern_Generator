@@ -32,7 +32,7 @@ public class CustomInterfaceInput extends DialogWrapper implements CustomInput {
                 .setDefaultInsets(new Insets(0, 0, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP))
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
-        pan.setPreferredSize(new Dimension(200, 100));
+        pan.setPreferredSize(new Dimension(300, 150));
         pan.add(label("Enter Interface Name"), gb.nextLine().next().weightx(0.2));
         pan.add(interName, gb.nextLine().next().weightx(0.8));
 

@@ -20,7 +20,7 @@ public class FactoryMethod extends Pattern {
                 .addMethod(factoryMethod)
                 .build();
 
-        storeFile(factClass, name, pack, path);
+        storeFile(factClass, pack, path);
     }
 
     @Override

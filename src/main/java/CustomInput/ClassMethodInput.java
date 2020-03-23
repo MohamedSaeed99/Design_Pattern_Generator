@@ -41,7 +41,9 @@ public class ClassMethodInput extends DialogWrapper implements CustomInput{
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
         pan.setPreferredSize(new Dimension(400, 200));
+        pan.setRequestFocusEnabled(true);
         pan.add(label("List of Classes (Space Separated)"), gb.nextLine().next().weightx(0.2));
+        classNames.requestFocusInWindow();
         pan.add(classNames, gb.nextLine().next().weightx(0.8));
         pan.add(label("List of Methods (Space Separated)"), gb.nextLine().next().weightx(0.2));
         pan.add(methodNames, gb.nextLine().next().weightx(0.8));

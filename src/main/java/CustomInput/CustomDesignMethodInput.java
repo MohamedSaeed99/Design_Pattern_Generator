@@ -19,9 +19,11 @@ public class CustomDesignMethodInput extends DialogWrapper implements CustomInpu
 
     public JPanel pan = new JPanel(new GridBagLayout());
     public JTextField designMethod = new JTextField();
+    String name;
 
     public CustomDesignMethodInput(boolean canBeParent, String design) {
         super(canBeParent);
+        this.name = design;
 //        initializes the pop-up
         init();
 //        sets the title
@@ -36,8 +38,8 @@ public class CustomDesignMethodInput extends DialogWrapper implements CustomInpu
                 .setDefaultInsets(new Insets(0, 0, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP))
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
-        pan.setPreferredSize(new Dimension(200, 100));
-        pan.add(label("Enter Design Method Names (Space Separated)"), gb.nextLine().next().weightx(0.2));
+        pan.setPreferredSize(new Dimension(300, 150));
+        pan.add(label("Enter Method Names for "+this.name+" (Space Separated)"), gb.nextLine().next().weightx(0.2));
         pan.add(designMethod, gb.nextLine().next().weightx(0.8));
 
         log.info("Added components to panel");

@@ -32,7 +32,7 @@ public class ClashNameInput extends DialogWrapper implements CustomInput {
                 .setDefaultInsets(new Insets(0, 0, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP))
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
-        pan.setPreferredSize(new Dimension(200, 100));
+        pan.setPreferredSize(new Dimension(300, 150));
         String txt = "Class with name " + this.name+" already exists";
         pan.add(label(txt), gb.nextLine().next().weightx(0.2));
         pan.add(rename, gb.nextLine().next().weightx(0.8));

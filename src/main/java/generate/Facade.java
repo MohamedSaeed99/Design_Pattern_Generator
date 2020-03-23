@@ -33,7 +33,7 @@ public class Facade extends Pattern {
         TypeSpec facadeClass = generatedClass.build();
 
 //        Stores class in file
-        storeFile(facadeClass, name, pack, path);
+        storeFile(facadeClass, pack, path);
     }
 
     //    Generates the Constructor for the Facade class
@@ -54,7 +54,7 @@ public class Facade extends Pattern {
 
 //        prompts user for additional information
         String designName = promptPatternName("Facade");
-        String[] desMethods = promptPatternMethods("Facade");
+        String[] desMethods = promptPatternMethods(designName);
 
         ClassMethodNames cmn = promptClassMethodsName("");
 

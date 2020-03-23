@@ -17,9 +17,11 @@ public class CustomDesignNameInput extends DialogWrapper implements CustomInput 
     final static Logger log = LoggerFactory.getLogger(CustomDesignNameInput.class);
     public JPanel pan = new JPanel(new GridBagLayout());
     public JTextField designName = new JTextField();
+    String name;
 
     public CustomDesignNameInput(boolean canBeParent, String design) {
         super(canBeParent);
+        this.name = design;
         init();
         setTitle(design);
     }
@@ -31,10 +33,9 @@ public class CustomDesignNameInput extends DialogWrapper implements CustomInput 
                 .setDefaultInsets(new Insets(0, 0, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP))
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
-        pan.setPreferredSize(new Dimension(200, 100));
-        pan.add(label("Enter Design Name Class"), gb.nextLine().next().weightx(0.2));
+        pan.setPreferredSize(new Dimension(300, 150));
+        pan.add(label("Enter Class Name for "+this.name), gb.nextLine().next().weightx(0.2));
         pan.add(designName, gb.nextLine().next().weightx(0.8));
-
         log.info("Added components to panel");
 
         return pan;

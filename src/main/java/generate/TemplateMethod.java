@@ -34,7 +34,7 @@ public class TemplateMethod extends Pattern {
             tempClass.addMethod(m);
         }
         TypeSpec genTempClass = tempClass.build();
-        storeFile(genTempClass, name, pack, path);
+        storeFile(genTempClass, pack, path);
     }
 
     @Override

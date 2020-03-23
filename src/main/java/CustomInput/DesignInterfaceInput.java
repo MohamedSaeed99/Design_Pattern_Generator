@@ -15,14 +15,16 @@ public class DesignInterfaceInput extends DialogWrapper implements CustomInput  
 
     public JPanel pan = new JPanel(new GridBagLayout());
     public JTextField dInter = new JTextField();
+    public JTextField info = new JTextField();
 
     String name;
-
-    public DesignInterfaceInput(boolean canBeParent, String name) {
+    boolean addInfo;
+    public DesignInterfaceInput(boolean canBeParent, String name, boolean addInfo) {
         super(canBeParent);
         this.name = name;
+        this.addInfo = addInfo;
         init();
-        setTitle("Rename " + name);
+        setTitle(name);
     }
 
     @Nullable
@@ -32,10 +34,16 @@ public class DesignInterfaceInput extends DialogWrapper implements CustomInput  
                 .setDefaultInsets(new Insets(0, 0, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP))
                 .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL);
 
-        pan.setPreferredSize(new Dimension(200, 100));
+        pan.setPreferredSize(new Dimension(400, 200));
         String txt = "Enter Interface for "+this.name;
         pan.add(label(txt), gb.nextLine().next().weightx(0.2));
         pan.add(dInter, gb.nextLine().next().weightx(0.8));
+
+        if(addInfo) {
+            String infoText = "Enter Class Name of Helper for " + this.name;
+            pan.add(label(infoText), gb.nextLine().next().weightx(0.2));
+            pan.add(info, gb.nextLine().next().weightx(0.8));
+        }
 
         log.info("Added components to panel");
 
@@ -45,5 +53,9 @@ public class DesignInterfaceInput extends DialogWrapper implements CustomInput  
     //    Retrieves information from the text field
     public String getName() {
         return dInter.getText();
+    }
+    //    Retrieves information from the text field
+    public String getInfo() {
+        return info.getText();
     }
 }

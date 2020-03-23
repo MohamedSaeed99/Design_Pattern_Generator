@@ -38,7 +38,7 @@ public class Mediator extends Pattern {
             generatedClass.addMethod(m);
         }
         TypeSpec genClass = generatedClass.build();
-        storeFile(genClass, name, pack, path);
+        storeFile(genClass, pack, path);
     }
 
     //    Generates constructor of classes to store instances of mediator
@@ -67,15 +67,16 @@ public class Mediator extends Pattern {
 
         log.debug("Storing class into file");
 
-        storeFile(classGenerated, name, pack, path);
+        storeFile(classGenerated, pack, path);
     }
 
     @Override
     public void generateCode(String configPackage, String configPath) {
 
 //        prompts user for additional information
-        String designName = promptPatternName("Mediator");
-        String[] designMethods = promptPatternMethods("Mediator");
+        String designInter = promptPatternInterface("Mediator", false)[0];
+        String designName = promptPatternName(designInter);
+        String[] designMethods = promptPatternMethods(designInter);
 
         String interName = promptInterface();
 
@@ -96,7 +97,7 @@ public class Mediator extends Pattern {
 
 //        gets the types of objects
         ArrayList<ClassName> classType = new ArrayList<ClassName>();
-        ClassName medType = ClassName.get(configPackage, "Mediator");
+        ClassName medType = ClassName.get(configPackage, designInter);
         ClassName inter = ClassName.get(configPackage, interName);
 
         methods.add(classConstructor(medType, designName));
@@ -120,7 +121,7 @@ public class Mediator extends Pattern {
         log.info("Generated all specified Classes");
 
 //        generates mediator interface
-        genInterface("Mediator", desAbsMethods, configPackage, configPath);
+        genInterface(designInter, desAbsMethods, configPackage, configPath);
 
 //        generates mediator class
         genMediatorClass(designName, desMethods, medType, classType, classNames, configPackage, configPath);

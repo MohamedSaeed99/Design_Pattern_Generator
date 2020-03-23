@@ -31,7 +31,8 @@ public class Visitor extends Pattern {
     public void generateCode(String configPackage, String configPath){
 
 //        prompts user for additional information
-        String designName = promptPatternName("Visitor");
+        String designInter = promptPatternInterface("Visitor", false)[0];
+        String designName = promptPatternName(designInter);
         String interName = promptInterface();
 
         ClassMethodNames cmn = promptClassMethodsName(interName);
@@ -51,11 +52,11 @@ public class Visitor extends Pattern {
         ArrayList<MethodSpec> visitConcreteMethod = new ArrayList<MethodSpec>();
 
 //        gets type of Visitor and interface
-        ClassName type = ClassName.get(configPackage, "Visitor");
+        ClassName type = ClassName.get(configPackage, designInter);
         ClassName inter = ClassName.get(configPackage, interName);
 
 //        generates the accept method
-        absMethod.add(absGenMethod("accept", null, type, "visitor"));
+        absMethod.add(absGenMethod("accept", null, type, designInter.toLowerCase()));
         methods.add(genConcreteAccept(type));
 
         log.debug("Constructed \"accept\" method");
@@ -77,7 +78,7 @@ public class Visitor extends Pattern {
         log.info("Generated specified classes");
 
 //        generates visitor interface and class
-        genInterface("Visitor", visitAbsMethod, configPackage, configPath);
+        genInterface(designInter, visitAbsMethod, configPackage, configPath);
         genClass(designName, visitConcreteMethod, type, false, configPackage, configPath);
 
         log.info("Generated Visitor interface and class");
