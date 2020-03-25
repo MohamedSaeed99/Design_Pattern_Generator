@@ -20,7 +20,9 @@ public class ClashDetect {
     public static String path;
     public static Project project;
 
-    public ClashDetect(){}
+    public ClashDetect(){
+        this.fileNames = new HashMap<String, String>();
+    }
 
     public ClashDetect(String path, Project project){
         this.fileNames = new HashMap<String, String>();
@@ -55,17 +57,15 @@ public class ClashDetect {
     }
 
     public boolean isFound(String name, String dir) {
-        System.out.println(name);
-        System.out.println(fileNames.containsKey(name));
         if(fileNames.containsKey(name)){
-            System.out.println("Found Key");
-            System.out.println(fileNames.get(name));
-            System.out.println(dir);
             if(fileNames.get(name).equals(dir)){
-                System.out.println("All Match");
                 return true;
             }
         }
         return false;
+    }
+
+    public HashMap<String, String> listOfFiles(){
+        return fileNames;
     }
 }
