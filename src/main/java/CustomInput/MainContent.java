@@ -72,6 +72,8 @@ public class MainContent implements ActionListener {
         String path = this.path + "/" + this.pack;
 
 //        sets up the initial hashmap with the files already there
+//        allows for clean set of files when button is pressed
+//        makes it able to check if files were deleted or not
         ClashDetect cd = new ClashDetect(path, this.project);
 
         String designPattern = e.getActionCommand();

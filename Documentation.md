@@ -14,7 +14,7 @@ user is trying to save the generated files to.
 
 ## How the Program is written
 
-This Program is divided into multiple classes based on the task they are to complete.
+This Program is divided into multiple directories and classes based on the task they are to complete.
 
 All the design patterns inherits from the abstract class Pattern. This allows in the reduction of the amount of code 
 written, and makes it easier for modification to occur.
@@ -24,7 +24,8 @@ Factory Method, Mediator, Template Method, and Visitor) contains specific functi
 design pattern and it also contains information on how the design pattern is generated.
 
 The CustomInput package within the generate package, contains all the different customized inputs, making it easier to 
-find and update if need be.
+find and update if need be. MainContent class retrieves all the files in the directory before a design pattern is 
+specified, this allows us to detect if a file is deleted in the process, so that its not clashed with future class names.
 
 DesignFactory interface allows us to make a contract for creating different instances of Patterns, which is then 
 implemented in the Factory class. This allows for the abstraction of the creation of instances of type Pattern.
@@ -33,7 +34,10 @@ The Generator class is the middle man between the user and the subsystem that we
 users to be able to use the program. The class creates an instance of the desired design pattern to be generated. It
 delegates the generation of the pattern to the Composite class, which will call the generate method.
 
-Lastly, DesignGen is the code behind creating the plugin ToolWindow and setting it up.
+DesignGen is the code behind creating the plugin ToolWindow and setting it up.
+
+Lastly, ClashDetect class assists in detecting whether a specified file name already exists in that directory. 
+It uses static variables to help with keeping the consistency of the variables throughout the program.
 
 ## Implemented Design Patterns
 
