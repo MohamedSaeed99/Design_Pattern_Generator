@@ -26,6 +26,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TestCode{
 
@@ -44,16 +45,12 @@ public class TestCode{
 ########################################################################################################################
 */
 
-    @Test
-//    Tests the initial retrieval process of files
-    public void testInitialSetup(){
-        ClashDetect cd = new ClashDetect();
-
+//  gets the initial files in directory
+    public void retrieveFiles(ClashDetect cd){
 //        Gets the predefined test files from the directory
         String path = config.getString("testInitialDir") + "/" + config.getString("testInitialPack");
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
-        String[] files = {"AbstractFactory.java", "Circle.java", "Square.java"};
 
 //        adds initial files to the list
         if(listOfFiles != null){
@@ -64,10 +61,99 @@ public class TestCode{
                 cd.addToMap(listOfFiles[i].getName(), p);
             }
         }
+    }
+
+//    Removes deleted files
+    public void update(ClashDetect cd){
+//        Gets the predefined test files from the directory
+        String path = config.getString("testInitialDir") + "/" + config.getString("testInitialPack");
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        ArrayList<String> files = new ArrayList<String>();
+        ArrayList<String> removedFiles = new ArrayList<String>();
+
+//        adds initial files to the list
+        if(listOfFiles != null){
+            for (int i = 0; i < listOfFiles.length; i++) {
+
+            }
+        }
+
+        Map<String, String> fileNames = cd.listOfFiles();
+
+//        checks and updates the filename data structure
+        for(Map.Entry<String, String> mp : fileNames.entrySet()){
+            if(!files.contains(mp.getKey())){
+                removedFiles.add(mp.getKey());
+            }
+        }
+
+        cd.removeKey(removedFiles);
+    }
+
+    @Test
+//    This function illustrates the process I did when programing it.
+//
+//    Process:
+//          Have access to the directory
+//          Read all the files
+//          Convert to string and store them
+//
+//    Tests the initial retrieval process of files
+    public void testInitialSetup(){
+        ClashDetect cd = new ClashDetect();
+        String[] files = {"A.txt", "B.txt", "C.txt"};
+        retrieveFiles(cd);
 
         for(String file : files){
             Assert.assertTrue(cd.isFound(file, "C:\\Users\\moesa\\Desktop\\CS474\\mohamed_saeed_hw3\\src\\test\\java\\InitialFileList"));
         }
+
+//        clears the data structure
+        cd.removeAll();
+    }
+
+
+    @Test
+//    This function illustrates the process I did when programing it.
+//
+//    Process:
+//          From given list, delete file
+//          Update the list by removing deleted file from data structure
+//          Check if the list is accurate
+//
+//    Tests the update functionality
+    public void testUpdateDataStructure() throws IOException {
+        ClashDetect cd = new ClashDetect();
+//        retrieves initial files
+        retrieveFiles(cd);
+
+        String path = config.getString("testInitialDir") + "/" + config.getString("testInitialPack");
+        File folder = new File(path);
+        File f = folder.listFiles()[0];
+
+//        deletes file
+        boolean deleted = folder.listFiles()[0].delete();
+        Assert.assertTrue(deleted);
+
+//        updates the data structure
+        update(cd);
+
+//        adds the oracle values into list
+        ArrayList<String> filesPresent = new ArrayList<String>();
+        filesPresent.add("B.txt");
+        filesPresent.add("C.txt");
+
+        Map<String, String> fileNames = cd.listOfFiles();
+
+//        Checks if everything in hash map is present in the oracle list
+        for(Map.Entry<String, String> mp : fileNames.entrySet()){
+            Assert.assertTrue(filesPresent.contains(mp.getKey()));
+        }
+
+        File file = new File(path + "/A.txt");
+        file.createNewFile();
     }
 
     @Test
@@ -121,11 +207,36 @@ public class TestCode{
         }
     }
 
+    @Test
+//    Tests if clearing the data structure works
+    public void testClearingDatasStructure(){
+        ClashDetect cd = new ClashDetect();
+//        retrieves initial files
+        retrieveFiles(cd);
 
+//        removes everything from data structure
+        cd.removeAll();
 
+        Map<String, String> ds = cd.listOfFiles();
+        Assert.assertEquals(0, ds.size());
+    }
 
+    @Test
+//    Tests that the removing of spaces in between is done correctly
+    public void testRemovingSpace(){
+        JTextField input = new JTextField();
 
-
+        input.setText("Bob The Builder");
+        Assert.assertTrue((input.getText().trim().replaceAll(" ", "")).equals("BobTheBuilder"));
+        input.setText("Another One ");
+        Assert.assertTrue((input.getText().trim().replaceAll(" ", "")).equals("AnotherOne"));
+        input.setText("Luke");
+        Assert.assertTrue((input.getText().trim().replaceAll(" ", "")).equals("Luke"));
+        input.setText("");
+        Assert.assertTrue((input.getText().trim().replaceAll(" ", "")).equals(""));
+        input.setText(" ");
+        Assert.assertTrue((input.getText().trim().replaceAll(" ", "")).equals(""));
+    }
 
 /*
 ########################################################################################################################

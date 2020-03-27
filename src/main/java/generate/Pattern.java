@@ -76,7 +76,7 @@ public abstract class Pattern {
         do {
             CustomInterfaceInput ci = new CustomInterfaceInput(true);
             if (ci.showAndGet()) {
-                interName = ci.getInterface();
+                interName = ci.getInterface().trim().replaceAll(" ", "");
             }
             if (interName.equals("")) {
                 NoInputWarning ni = new NoInputWarning(true);
@@ -212,7 +212,6 @@ public abstract class Pattern {
         }
         return cmn;
     }
-
 
     //    generates a non abstract method
     public MethodSpec genEmptyMethod(String name, boolean override, ClassName paramType, String paramName) {

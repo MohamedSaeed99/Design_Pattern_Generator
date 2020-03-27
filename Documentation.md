@@ -10,7 +10,7 @@ methods, name of interface for similar classes, list of similar classes, list of
 ## New Feature
 The newest feature consists of name clash detection. User will be prompted to re-enter another name if the program 
 detects name clash, meaning that the class name already exists. Name clash detection will be based on the directory the
-user is trying to save the generated files to.
+user is trying to save the generated files to. Spaces placed in between the words of the input are truncated.
 
 ## How the Program is written
 
@@ -37,7 +37,9 @@ delegates the generation of the pattern to the Composite class, which will call 
 DesignGen is the code behind creating the plugin ToolWindow and setting it up.
 
 Lastly, ClashDetect class assists in detecting whether a specified file name already exists in that directory. 
-It uses static variables to help with keeping the consistency of the variables throughout the program.
+It uses static variables to help with keeping the consistency of the variables throughout the program. It only allows
+for the creation of 1 instance of data structure throughout the program. The program will update the data structure
+each time a design pattern is selected.
 
 ## Implemented Design Patterns
 
@@ -114,6 +116,7 @@ Here is a list of limitations this program has:
  * User should fill in at least 1 thing when prompted for additional information(i.e "Name of Interface", "List of 
  classes", etc.), failure to do so will result in an additional pop-up to notify the user to fill out the missing 
  information.
+ * Requires that the path inputted in application.conf to start with `/src`.
 
 ## Design Pattern Naming Convention
 

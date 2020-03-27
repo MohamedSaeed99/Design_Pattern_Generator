@@ -69,17 +69,22 @@ public class MainContent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Generator gen = new Generator();
 //        gets the absolute directory where files well be stored
-        String path = this.path + "/" + this.pack;
+        String path = this.path + "/" + this.pack.replaceAll("\\.", "/");
 
 //        sets up the initial hashmap with the files already there
 //        allows for clean set of files when button is pressed
 //        makes it able to check if files were deleted or not
         ClashDetect cd = new ClashDetect(path, this.project);
-
+        cd.updateFiles();
         String designPattern = e.getActionCommand();
 
-        log.info("Button clicked value: ", designPattern);
+        log.info("Button clicked value: {}", designPattern);
 
-        gen.generate(designPattern, this.pack, this.path);
+        String dir = path.substring(path.lastIndexOf("/src")+5).replaceAll("/", ".");
+        path = path.substring(0, path.lastIndexOf("/src")+4);
+
+        log.info("Path: {}", path);
+        log.info("Package: {}", dir);
+        gen.generate(designPattern, dir, path);
     }
 }

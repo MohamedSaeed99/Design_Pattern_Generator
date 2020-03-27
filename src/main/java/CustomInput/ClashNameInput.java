@@ -44,6 +44,6 @@ public class ClashNameInput extends DialogWrapper implements CustomInput {
 
 //    Retrieves information from the text field
     public String getName() {
-        return rename.getText();
+        return rename.getText().trim().replaceAll(" ", "");
     }
 }

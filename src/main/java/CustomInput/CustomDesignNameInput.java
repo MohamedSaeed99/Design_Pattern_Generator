@@ -42,6 +42,6 @@ public class CustomDesignNameInput extends DialogWrapper implements CustomInput 
     }
 
     public String getDesign() {
-        return designName.getText();
+        return designName.getText().trim().replaceAll(" ", "");
     }
 }

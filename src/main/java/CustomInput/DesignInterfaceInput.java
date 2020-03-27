@@ -52,10 +52,10 @@ public class DesignInterfaceInput extends DialogWrapper implements CustomInput  
 
     //    Retrieves information from the text field
     public String getName() {
-        return dInter.getText();
+        return dInter.getText().trim().replaceAll(" ", "");
     }
     //    Retrieves information from the text field
     public String getInfo() {
-        return info.getText();
+        return info.getText().trim().replaceAll(" ", "");
     }
 }
