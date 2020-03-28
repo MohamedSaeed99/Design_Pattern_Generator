@@ -57,7 +57,8 @@ public class TestCode{
             for (int i = 0; i < listOfFiles.length; i++) {
 
                 String p = listOfFiles[i].getAbsolutePath().substring(0, listOfFiles[i].getAbsolutePath()
-                        .indexOf("\\"+listOfFiles[i].getName()));
+                        .indexOf("\\"+listOfFiles[i].getName())).replaceAll("\\\\", "/");
+                System.out.println(p);
                 cd.addToMap(listOfFiles[i].getName(), p);
             }
         }
@@ -109,7 +110,7 @@ public class TestCode{
 
 //        checks if file name is stored in data structure
         for(String file : files){
-            Assert.assertTrue(cd.isFound(file, "C:\\Users\\moesa\\Desktop\\CS474\\mohamed_saeed_hw3\\src\\test\\java\\InitialFileList"));
+            Assert.assertTrue(cd.isFound(file, "C:/Users/moesa/Desktop/CS474/mohamed_saeed_hw3/src/test/java/InitialFileList"));
         }
 
 //        clears the data structure

@@ -60,3 +60,23 @@ Monday, March 30 at 10PM CST via the bitbucket repository. Your submission will 
 - the minimum grade for this homework cannot be less than zero.
 
 Enjoy!!
+
+## Installation and Execution
+
+To download this program from bit-bucket, run this command in a git friendly command prompt:
+
+`git clone https://MohamedSaeed99@bitbucket.org/MohamedSaeed99/mohamed_saeed_hw3.git` 
+
+###### Using Intellij
+
+Open the downloaded project in intellij and run it.
+
+###### Using CommandLine
+
+ 1. Download and install Gradle, and make sure that you are able to use gradle via command line.
+
+ 2. Navigate to the project.
+
+ 3. Run `./gradlew build` to build the project.
+ 
+ 4. Run `./gradlew runIde` this will begin the execution of the program. 
