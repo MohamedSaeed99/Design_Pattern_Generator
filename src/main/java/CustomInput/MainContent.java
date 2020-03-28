@@ -80,11 +80,13 @@ public class MainContent implements ActionListener {
 
         log.info("Button clicked value: {}", designPattern);
 
+//        Gives a percise name to the package
         String dir = path.substring(path.lastIndexOf("/src")+5).replaceAll("/", ".");
         path = path.substring(0, path.lastIndexOf("/src")+4);
 
         log.info("Path: {}", path);
         log.info("Package: {}", dir);
+
         gen.generate(designPattern, dir, path);
     }
 }

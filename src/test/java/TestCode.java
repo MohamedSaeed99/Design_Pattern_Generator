@@ -93,7 +93,7 @@ public class TestCode{
     }
 
     @Test
-//    This function illustrates the process I did when programing it.
+//    This function illustrates the process I did when programing the actual function.
 //
 //    Process:
 //          Have access to the directory
@@ -104,8 +104,10 @@ public class TestCode{
     public void testInitialSetup(){
         ClashDetect cd = new ClashDetect();
         String[] files = {"A.txt", "B.txt", "C.txt"};
+
         retrieveFiles(cd);
 
+//        checks if file name is stored in data structure
         for(String file : files){
             Assert.assertTrue(cd.isFound(file, "C:\\Users\\moesa\\Desktop\\CS474\\mohamed_saeed_hw3\\src\\test\\java\\InitialFileList"));
         }

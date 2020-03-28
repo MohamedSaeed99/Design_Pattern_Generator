@@ -3,14 +3,15 @@
 ## By: Mohamed Saeed
 This program is a design pattern generator plugin where a user executing this program will choose one of the 8 listed 
 design patterns to generate.
-Based on the specified design patterns, the user will be prompted additional information via popups about those 
-design patterns. These additional information may consist of: name of design pattern class, list of design pattern 
+Based on the specified design patterns, the user will be prompted additional information via popups about that 
+design pattern. These additional information may consist of: name of design pattern class, list of design pattern 
 methods, name of interface for similar classes, list of similar classes, list of methods that belong to those classes.
 
 ## New Feature
-The newest feature consists of name clash detection. User will be prompted to re-enter another name if the program 
-detects name clash, meaning that the class name already exists. Name clash detection will be based on the directory the
-user is trying to save the generated files to. Spaces placed in between the words of the input are truncated.
+The newest feature includes name clash detection. The user will be prompted to re-enter a name if the program 
+detects a name clash, meaning that the class name already exists within the scope. Name clash detection will be based 
+on the directory the user is trying to save the generated files to. In addition to name clash, spaces in between the 
+words of the input will truncated unless the program asks for multiple interfaces.
 
 ## How the Program is written
 
@@ -37,8 +38,8 @@ delegates the generation of the pattern to the Composite class, which will call 
 DesignGen is the code behind creating the plugin ToolWindow and setting it up.
 
 Lastly, ClashDetect class assists in detecting whether a specified file name already exists in that directory. 
-It uses static variables to help with keeping the consistency of the variables throughout the program. It only allows
-for the creation of 1 instance of data structure throughout the program. The program will update the data structure
+It uses static variables to help keep the consistency of the variables throughout the program. It only allows
+for the creation of 1 instance of the data structure throughout the program. The program will update the data structure
 each time a design pattern is selected.
 
 ## Implemented Design Patterns
@@ -60,7 +61,7 @@ to generate their desired design pattern template, leaving out the concrete impl
 ### Pros
 
 The pros of having different files for each java class is that it becomes easier and faster to locate specific code to 
-modify or add. It also allows for decoupling of different components and making it able to reuse some of the code.
+modify or add. It also allows for decoupling of different components, making it easier for reuse.
 
 ##### Abstract Factory
 
@@ -116,7 +117,7 @@ Here is a list of limitations this program has:
  * User should fill in at least 1 thing when prompted for additional information(i.e "Name of Interface", "List of 
  classes", etc.), failure to do so will result in an additional pop-up to notify the user to fill out the missing 
  information.
- * Requires that the path inputted in application.conf to start with `/src`.
+ * Requires that the path inputted in application.conf to start with `/src`, and package input be separated by `.`.
 
 ## Design Pattern Naming Convention
 
