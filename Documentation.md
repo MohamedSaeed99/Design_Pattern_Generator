@@ -136,7 +136,7 @@ Here is a list of buttons a user can click on:
 
 To download this program from bit-bucket, run this command in a git friendly command prompt:
 
-`git clone https://MohamedSaeed99@bitbucket.org/MohamedSaeed99/mohamed_saeed_hw2.git` 
+`git clone https://MohamedSaeed99@bitbucket.org/MohamedSaeed99/mohamed_saeed_hw3.git` 
 
 ###### Using Intellij
 
