@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestCode" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-28T17:28:50" hostname="LAPTOP-7IQ6BL45" time="0.484">
+  <properties/>
+  <testcase name="testInitialSetup" classname="TestCode" time="0.484"/>
+  <system-out><![CDATA[C:/Users/moesa/Desktop/CS474/mohamed_saeed_hw3/src/test/java/InitialFileList
+12:28:51.211 [Test worker] DEBUG plugin.ClashDetect - Inserting A.txt into data structure
+C:/Users/moesa/Desktop/CS474/mohamed_saeed_hw3/src/test/java/InitialFileList
+12:28:51.218 [Test worker] DEBUG plugin.ClashDetect - Inserting B.txt into data structure
+C:/Users/moesa/Desktop/CS474/mohamed_saeed_hw3/src/test/java/InitialFileList
+12:28:51.218 [Test worker] DEBUG plugin.ClashDetect - Inserting C.txt into data structure
+12:28:51.218 [Test worker] INFO  plugin.ClashDetect - File name: A.txt is found
+12:28:51.219 [Test worker] INFO  plugin.ClashDetect - File name: B.txt is found
+12:28:51.220 [Test worker] INFO  plugin.ClashDetect - File name: C.txt is found
+12:28:51.220 [Test worker] INFO  plugin.ClashDetect - Removing all elements in data structure
+]]></system-out>
+  <system-err><![CDATA[SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/C:/Users/moesa/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.2.3/7c4f3c474fb2c041d8028740440937705ebb473a/logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/C:/Users/moesa/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2019.3.1/52292e4f8a0ccb3ceb08bd81fd57b88923ac8e99/ideaIC-2019.3.1/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+]]></system-err>
+</testsuite>

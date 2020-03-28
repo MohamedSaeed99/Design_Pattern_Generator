@@ -55,11 +55,7 @@ public class TestCode{
 //        adds initial files to the list
         if(listOfFiles != null){
             for (int i = 0; i < listOfFiles.length; i++) {
-
-                String p = listOfFiles[i].getAbsolutePath().substring(0, listOfFiles[i].getAbsolutePath()
-                        .indexOf("\\"+listOfFiles[i].getName())).replaceAll("\\\\", "/");
-                System.out.println(p);
-                cd.addToMap(listOfFiles[i].getName(), p);
+                cd.addToMap(listOfFiles[i].getName(), "C:/Users/moesa/Desktop/CS474/mohamed_saeed_hw3/src/test/java/InitialFileList");
             }
         }
     }

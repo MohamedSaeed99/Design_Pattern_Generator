@@ -1,0 +1,17 @@
+<idea-plugin>
+  <change-notes>
+      Add change notes here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;</change-notes>
+  <idea-version since-build="193.5662" until-build="193.*"/>
+  <id>org.example.mohamed_saeed_hw3</id>
+  <name>Design Pattern Generator</name>
+  <vendor email="msaeed7@uic.com">Bit-Bucket</vendor>
+  <version>1.0-SNAPSHOT</version>
+  <description>
+    Generates a design pattern based on user
+    </description>
+  <depends>com.intellij.modules.lang</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="Generator" anchor="right" factoryClass="plugin.DesignGen"/>
+  </extensions>
+</idea-plugin>
